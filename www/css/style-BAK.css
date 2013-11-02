@@ -1,0 +1,89 @@
+#title {
+    color : #99004f;
+    font-size : 26pt;
+    text-align : center;
+}
+table{
+    border : 0px solid #eee;
+    width : 100%;
+    color : black;
+    text-align : center;
+    padding-top : 15px;
+}
+table.legend{
+    border : 0px solid #eee;
+    width : 100%;
+    color : black;
+    text-align : left;
+    padding-top : 15px;
+}
+table td{
+    font-size : 10pt;
+    padding : 3px;
+    border : 1px solid #c7c7c7;
+}
+table th { 
+    font-size : 9pt;
+    height: 30px;
+    vertical-align: bottom; 
+    background : #eee;
+    border : 1px solid #c7c7c7;
+}
+.header { 
+    font-size : 9pt;
+    height: 30px;
+    vertical-align: top; 
+    background : #eee;
+    border : 1px solid #c7c7c7;
+}
+.rando {
+    background : #6ECFF6;
+}
+.binarymatrix {
+    background : #F26C4F;
+}
+.blockfreq {
+    background : #F68E55;
+}
+.cumsums {
+    background : #FBAF5C;
+}
+.longestrun {
+    background : #FFF467;
+}
+.maurers {
+    background : #ACD372;
+}
+.monobitfreq {
+    background : #7CC576;
+}
+.nonoverlapping {
+    background : #3BB878;
+}
+.overlapping {
+    background : #1ABBB4;
+}
+.randomexcursions {
+    background : #00BFF3;
+}
+.randomexcursionsvariant {
+    background : #438CCA;
+}
+.runs {
+    background : #5574B9;
+}
+.spectral {
+    background : #605CA8;
+}
+.linearcomplexity {
+    background : #855FA8;
+}
+.approximateentropy {
+    background : #A763A8;
+}
+.serial {
+    background : #F06EA9;
+}
+.md5 {
+    background : #F26D7D;
+}

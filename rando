@@ -1,0 +1,196 @@
+#!/usr/bin/env python
+
+##
+## rando
+##
+
+###############################################################################
+###############################################################################
+## DEPENDENCIES:
+###############################################################################
+###############################################################################
+##
+## Rando.Util.Args.py
+## Rando.NIST.Tests.py
+##
+###############################################################################
+###############################################################################
+## USAGE
+###############################################################################
+###############################################################################
+##
+##  ##
+##  ## generate a random number using /dev/urandom and output to text 
+##  ## file in current directory (file will be named with current date/time)
+##  ##
+##
+##      ./rando --devrand
+##
+##  ##
+##  ## specify input file of binary bits to test w/ NIST randomness test suite
+##  ##
+##
+##      ./rando --infile rand-bits.txt
+##
+##  ##
+##  ## generate non-random test data
+##  ##
+##
+##      ./rando --test
+##
+##  ##
+##  ## generate a random number by downloading a list of sites, hashing
+##  ##
+##
+##      ./rando --netrand --sites ./data/sites.list
+##
+##  ##
+##  ## other options
+##  ##
+##
+##      --outdir (-d)   = specify a directory where output will be store
+##      --outfile (-o)  = specify filename appeneded to output file
+##      --verbose (-v)  = verbose output
+##      --len (-l)      = specify length of random number (default = 16384)
+##
+###############################################################################
+###############################################################################
+
+import os
+import sys
+import datetime
+import hashlib
+
+import Rando.Util as Util
+import Rando.Util.Args as Args
+import Rando.NIST.Caller as Caller
+import Rando.Scraper as Scraper
+
+###############################################################################
+###############################################################################
+## MAIN -- rando
+###############################################################################
+###############################################################################
+
+if __name__ == '__main__':
+
+
+    a = Args.Args()
+    args = a.parse()
+
+    if not len(sys.argv) > 1:
+        Util.verb(True, '[-]\n[-] No arguments provided. \n[-]\n', True)
+        a.parser.print_help()
+        sys.exit(0)
+
+    if args.verbose:
+        verbose = True
+    else:
+        verbose = False
+
+    pathlist = []
+
+    ##
+    ## prepend current working directory to pathlist
+    ##
+    pathlist.insert(0, os.getcwd())
+
+
+    ##
+    ## prepend user supplied output directory to pathlist
+    ##
+    if args.outdir:
+        pathlist.append(args.outdir[0])
+        ##
+        ## path is now <curr>/<working>/<dir>/<outdir>
+        ##
+
+
+    ##
+    ## check for user supplied output file
+    ##
+    if args.outfile:
+        ##
+        ## create user supplied portion of output file name
+        ##
+        pathlist.append(args.outfile[0])
+    else:
+        ##
+        ## create data/time portion of output filename
+        ##
+        pathlist.append(str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-'))
+
+
+    if args.infile:
+
+        Util.verb(verbose, '[+]\n[+] BEGINNING NIST RANDOMNESS TEST SUITE\n[+]\n', False)
+
+        pathlist.append(''.join(['static-', pathlist.pop()]))
+
+        file = args.infile[0]
+        p = os.path.join(os.getcwd(), file)
+        with open(p, 'r') as f:
+            binin = f.read().rstrip()
+            pvals = Caller.callalltests(binin, verbose)
+            Util.writedata(pathlist, pvals, binin)
+
+    else:
+        ##
+        ## no infile provided ... generate random numbers and test
+        ##
+        Util.verb(verbose, '[+]\n[+] No infile provided, random number will be generated\n[+]\n', False)
+
+        if args.len:
+            len = int(args.len[0])
+        else:
+            len = 16384
+
+        if args.test:
+            Util.verb(verbose, '[+]\n[+] Generating non-random test data\n[+]\n', False)
+            pathlist.append(''.join(['test-', pathlist.pop()]))
+
+            r1 = Util.nonrand(verbose, len, 1)
+            pvals = Caller.callalltests(r1, verbose)
+            Util.writedata(pathlist, pvals, r1)
+
+            r1 = Util.nonrand(verbose, len, 2)
+            pvals = Caller.callalltests(r1, verbose)
+            Util.writedata(pathlist, pvals, r1)
+
+            r1 = Util.nonrand(verbose, len, 3)
+            pvals = Caller.callalltests(r1, verbose)
+            Util.writedata(pathlist, pvals, r1)
+
+        else:
+
+            if args.devrand:
+                ##
+                ## create random data from /dev/urandom
+                ##
+                pathlist.append(''.join(['rand-', pathlist.pop()]))
+                r1 = Util.randgen(len)
+                md5 = hashlib.md5(r1).hexdigest()
+            
+                pvals = Caller.callalltests(r1, verbose)
+                Util.writedata(pathlist, pvals, r1, md5)
+
+            if args.netrand:
+                ##
+                ## create random data from internet noise
+                ##
+                if args.sites:
+                    pathlist.append(''.join(['net', pathlist.pop()]))
+                    spath = os.path.join(os.getcwd(), args.sites[0])
+                    
+                    s = Scraper.Scraper(len)
+
+                    hashes = s.scrape(spath, verbose)
+
+                    r2 = s.genhash(hashes, verbose)
+                    md5 = hashlib.md5(r2).hexdigest()
+                    pvals = Caller.callalltests(r2, verbose)
+                    Util.writedata(pathlist, pvals, r2, md5)
+
+                else:
+                    Util.verb(verbose, '[-]\n[-] Cannot perform netrand without site list\n[-]\n', True)
+

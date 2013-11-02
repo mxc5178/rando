@@ -1,0 +1,128 @@
+#title {
+    color : #99004f;
+    font-size : 26pt;
+    text-align : center;
+}
+table{
+    border : 0px solid #eee;
+    width : 100%;
+    color : black;
+    text-align : center;
+    padding-top : 15px;
+}
+table.legend{
+    border : 0px solid #eee;
+    width : 100%;
+    color : black;
+    text-align : left;
+    padding-top : 15px;
+}
+table.info{
+    width : 100%;
+    color : black;
+    text-align : left;
+    #padding-top : 15px;*/
+}
+table.info td{
+    /*border : 0px solid #99004f;*/
+    font-size : 10pt;
+    padding : 5px;
+    border : 1px solid #c7c7c7;
+    background : white;
+}
+table td{
+    font-size : 10pt;
+    padding : 3px;
+    border : 1px solid #c7c7c7;
+}
+table th { 
+    font-size : 9pt;
+    height: 30px;
+    vertical-align: bottom; 
+    background : #eee;
+    border : 1px solid #c7c7c7;
+}
+
+.header { 
+    font-size : 9pt;
+    height: 30px;
+    vertical-align: top; 
+    background : #eee;
+    border : 1px solid #c7c7c7;
+}
+table.legend td.header {
+    width : 25%;
+    font-weight : bold;
+    font-size : 18pt;
+    text-align : center;
+    vertical-align : middle;
+}
+table.legend div{
+    font-weight : bold;
+    padding : 10px;
+    padding-left : 20px;
+}
+table.legend p{
+    padding-left : 40px;
+}
+table.legend div.title {
+    font-weight : bold;
+    font-size : 12pt;
+    padding-left : 10px;
+}
+.rando {
+    background : #6ECFF6;
+}
+.binarymatrix {
+    background : #F7977A;
+}
+.blockfreq {
+    background : #F9AD81;
+}
+.cumsums {
+    background : #FDC68A;
+}
+.longestrun {
+    background : #FFF79A;
+}
+.maurers {
+    background : #C4DF9B;
+}
+.monobitfreq {
+    background : #A2D39C;
+}
+.nonoverlapping {
+    background : #82CA9D;
+}
+.overlapping {
+    background : #7BCDC8;
+}
+.randomexcursions {
+    background : #6ECFF6;
+}
+.randomexcursionsvariant {
+    background : #7EA7D8;
+}
+.runs {
+    background : #8493CA;
+}
+.spectral {
+    background : #8882BE;
+}
+.linearcomplexity {
+    background : #A187BE;
+}
+.approximateentropy {
+    background : #BC8DBF;
+}
+.serial {
+    background : #F49AC2;
+}
+.md5 {
+    background : #F6989D;
+}
+.data {
+    background : #D7D7D7;
+    width : 50%;
+}
+
