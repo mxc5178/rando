@@ -33,6 +33,7 @@ import os
 import numpy as np
 import scipy.special as spc
 import sys
+import subprocess
 
 
 ###############################################################################
@@ -158,3 +159,15 @@ def xor(a, b):
 
     return stream
 
+def call(cmd, shell, cwd, input):
+    pipe = subprocess.Popen(
+        cmd, 
+        shell=shell, 
+        cwd=cwd,
+        stdout = subprocess.PIPE,
+        stdin = subprocess.PIPE,
+        stderr = subprocess.PIPE
+    )
+
+    (out, error) = pipe.communicate(input)
+    return out, error

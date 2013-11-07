@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ##
-## RANDO/Util/Args.py
+## Rando/Util/Args.py
 ##
 
 ###############################################################################
@@ -10,7 +10,7 @@
 ###############################################################################
 ###############################################################################
 ##
-## argparse
+## argparse (Python 2.7.3)
 ##
 ###############################################################################
 ###############################################################################
@@ -94,6 +94,14 @@ class Args(object):
         action='store_true',
         default=None,
         help='Ranom number generation using /dev/urandom'
+    )
+
+    parser.add_argument(
+        '--archive', '-a',
+        dest='archive',
+        action='store_true',
+        default=None,
+        help='Archive current files in <outdir> if older than one day'
     )
 
     parser.add_argument(

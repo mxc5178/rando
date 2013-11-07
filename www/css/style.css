@@ -42,7 +42,9 @@ table th {
     background : #eee;
     border : 1px solid #c7c7c7;
 }
-
+table.archive td { 
+    vertical-align: top; 
+}
 .header { 
     font-size : 9pt;
     height: 30px;
@@ -126,3 +128,51 @@ table.legend div.title {
     width : 50%;
 }
 
+.Jan {
+    background : #F7977A;
+    border : 1px solid #ED1C24;
+}
+.Feb {
+    background : #F9AD81;
+    border : 1px solid #F26522;
+}
+.Mar {
+    background : #FDC68A;
+    border : 1px solid #F7941D;
+}
+.Apr {
+    background : #FFF79A;
+    border : 1px solid #FFF200;
+}
+.May {
+    background : #C4DF9B;
+    border : 1px solid #8DC73F;
+}
+.Jun {
+    background : #A2D39C;
+    border : 1px solid #39B54A;
+}
+.Jul {
+    background : #82CA9D;
+    border : 1px solid #00A651;
+}
+.Aug {
+    background : #7BCDC8;
+    border : 1px solid #00A99D;
+}
+.Sep {
+    background : #6ECFF6;
+    border : 1px solid #00AEEF;
+}
+.Oct {
+    background : #7EA7D8;
+    border : 1px solid #0072BC;
+}
+.Nov {
+    background : #8493CA;
+    border : 1px solid #0054A6;
+}
+.Dec {
+    background : #8882BE;
+    border : 1px solid #2E3192;
+}

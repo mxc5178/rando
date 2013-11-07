@@ -65,6 +65,7 @@ import Rando.Util as Util
 import Rando.Util.Args as Args
 import Rando.NIST.Caller as Caller
 import Rando.Scraper as Scraper
+import Rando.Util.Archiver as Archiver
 
 ###############################################################################
 ###############################################################################
@@ -105,6 +106,11 @@ if __name__ == '__main__':
         ## path is now <curr>/<working>/<dir>/<outdir>
         ##
 
+        if args.archive:
+            ##
+            ## archive files in <outdir> older than one day
+            ##
+            Archiver.archive(pathlist, verbose)
 
     ##
     ## check for user supplied output file

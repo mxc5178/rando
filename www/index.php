@@ -7,6 +7,7 @@
 <body>
     <?php
         echo "<div id=\"title\">Rando the Random Number Generator</div>";
+        echo "<div class=\"archive\"><a href=\"./archive.php\">Archive</a></div>";
 
         $dir = './data/';
         if ($dh = opendir($dir)) {
@@ -156,5 +157,10 @@
         }
 
 
-        include($_SERVER['DOCUMENT_ROOT'] . '/rando/includes/legend.php');
+        echo "<div class=\"archive\"><a href=\"./archive.php\">Archive</a></div>";
 
+        include($_SERVER['DOCUMENT_ROOT'] . '/rando/includes/legend.php');
+    ?>
+
+</body>
+</html>
