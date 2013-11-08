@@ -54,11 +54,10 @@ def archive(pathlist, verbose):
             atime = datetime.datetime.strptime(time.ctime(os.path.getmtime(p)), "%a %b %d %H:%M:%S %Y")
             now = datetime.datetime.strptime(time.ctime(int(time.time())), "%a %b %d %H:%M:%S %Y")
 
-            if now - atime > datetime.timedelta(hours = 8):
+            if now - atime > datetime.timedelta(hours = 24):
                 ##
                 ## file is older than a day ... add to archive list
                 ##
-                #print 'FILES OLDER THAN 8 hours'
                 archivelist.append(p)
 
     if len(archivelist) > 0:
