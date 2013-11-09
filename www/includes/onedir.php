@@ -70,7 +70,7 @@ function getOneDirectory( $dir = '.', $level = 0, $year = '', $month = '', $day 
                     $msec
                 ) = explode("-", substr($filename, strlen($dir)));
 
-                echo "Medhod: ";
+                echo "Method: ";
                 if ($type == "netrand"){
                     echo "Internet Noise";
                 }else{

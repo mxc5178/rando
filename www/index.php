@@ -66,7 +66,7 @@
                         $msec
                     ) = explode("-", substr($filename, strlen($dir)));
 
-                    echo "Medhod: ";
+                    echo "Method: ";
                     if ($type == "netrand"){
                         echo "Internet Noise";
                     }else{
