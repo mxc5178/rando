@@ -75,7 +75,6 @@ import Rando.Util.Archiver as Archiver
 
 if __name__ == '__main__':
 
-
     a = Args.Args()
     args = a.parse()
 
@@ -94,14 +93,13 @@ if __name__ == '__main__':
     ##
     ## prepend current working directory to pathlist
     ##
-    pathlist.insert(0, os.getcwd())
-
+    cwd = os.getcwd()
 
     ##
     ## prepend user supplied output directory to pathlist
     ##
     if args.outdir:
-        pathlist.append(args.outdir[0])
+        root = args.outdir[0]
         ##
         ## path is now <curr>/<working>/<dir>/<outdir>
         ##
@@ -110,8 +108,9 @@ if __name__ == '__main__':
             ##
             ## archive files in <outdir> older than one day
             ##
-            Archiver.archive(pathlist, verbose)
-
+            Archiver.archive([cwd, root], verbose)
+    else:
+        root = ''
     ##
     ## check for user supplied output file
     ##
@@ -119,26 +118,26 @@ if __name__ == '__main__':
         ##
         ## create user supplied portion of output file name
         ##
-        pathlist.append(args.outfile[0])
+        outfile = args.outfile[0]
     else:
         ##
         ## create data/time portion of output filename
         ##
-        pathlist.append(str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-'))
-
+        outfile = ''
 
     if args.infile:
 
         Util.verb(verbose, '[+]\n[+] BEGINNING NIST RANDOMNESS TEST SUITE\n[+]\n', False)
 
-        pathlist.append(''.join(['static-', pathlist.pop()]))
+        filename = 'static-' + outfile + str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-')
 
         file = args.infile[0]
         p = os.path.join(os.getcwd(), file)
         with open(p, 'r') as f:
             binin = f.read().rstrip()
+            md5 = hashlib.md5(binin).hexdigest()
             pvals = Caller.callalltests(binin, verbose)
-            Util.writedata(pathlist, pvals, binin)
+            Util.writedata([cwd, root, outfile, filename], pvals, binin, md5)
 
     else:
         ##
@@ -153,19 +152,23 @@ if __name__ == '__main__':
 
         if args.test:
             Util.verb(verbose, '[+]\n[+] Generating non-random test data\n[+]\n', False)
-            pathlist.append(''.join(['test-', pathlist.pop()]))
+
+            filename = 'test-' + outfile + str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-')
 
             r1 = Util.nonrand(verbose, len, 1)
+            md5 = hashlib.md5(r2).hexdigest()
             pvals = Caller.callalltests(r1, verbose)
-            Util.writedata(pathlist, pvals, r1)
+            Util.writedata([cwd, root, filename], pvals, r1, md5)
 
             r1 = Util.nonrand(verbose, len, 2)
+            md5 = hashlib.md5(r2).hexdigest()
             pvals = Caller.callalltests(r1, verbose)
-            Util.writedata(pathlist, pvals, r1)
+            Util.writedata([cwd, root, filename], pvals, r1, md5)
 
             r1 = Util.nonrand(verbose, len, 3)
+            md5 = hashlib.md5(r2).hexdigest()
             pvals = Caller.callalltests(r1, verbose)
-            Util.writedata(pathlist, pvals, r1)
+            Util.writedata([cwd, root, filename], pvals, r1, md5)
 
         else:
 
@@ -173,19 +176,22 @@ if __name__ == '__main__':
                 ##
                 ## create random data from /dev/urandom
                 ##
-                pathlist.append(''.join(['rand-', pathlist.pop()]))
+
+                filename = 'rand-' + outfile + str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-')
+
                 r1 = Util.randgen(len)
                 md5 = hashlib.md5(r1).hexdigest()
             
                 pvals = Caller.callalltests(r1, verbose)
-                Util.writedata(pathlist, pvals, r1, md5)
+                Util.writedata([cwd, root, filename], pvals, r1, md5)
 
             if args.netrand:
                 ##
                 ## create random data from internet noise
                 ##
                 if args.sites:
-                    pathlist.append(''.join(['net', pathlist.pop()]))
+
+                    filename = 'netrand-' + outfile + str(datetime.datetime.now()).replace(' ', '-').replace(':', '-').replace('.','-')
                     spath = os.path.join(os.getcwd(), args.sites[0])
                     
                     s = Scraper.Scraper(len)
@@ -195,7 +201,7 @@ if __name__ == '__main__':
                     r2 = s.genhash(hashes, verbose)
                     md5 = hashlib.md5(r2).hexdigest()
                     pvals = Caller.callalltests(r2, verbose)
-                    Util.writedata(pathlist, pvals, r2, md5)
+                    Util.writedata([cwd, root, filename], pvals, r2, md5)
 
                 else:
                     Util.verb(verbose, '[-]\n[-] Cannot perform netrand without site list\n[-]\n', True)

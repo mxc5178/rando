@@ -51,14 +51,18 @@ def archive(pathlist, verbose):
         for i in files:
             p = os.path.join(path, i)
 
-            atime = datetime.datetime.strptime(time.ctime(os.path.getmtime(p)), "%a %b %d %H:%M:%S %Y")
-            now = datetime.datetime.strptime(time.ctime(int(time.time())), "%a %b %d %H:%M:%S %Y")
+            try:
+                atime = datetime.datetime.strptime(time.ctime(os.path.getmtime(p)), "%a %b %d %H:%M:%S %Y")
+                now = datetime.datetime.strptime(time.ctime(int(time.time())), "%a %b %d %H:%M:%S %Y")
 
-            if now - atime > datetime.timedelta(hours = 24):
-                ##
-                ## file is older than a day ... add to archive list
-                ##
-                archivelist.append(p)
+                if now - atime > datetime.timedelta(hours = 24):
+                    ##
+                    ## file is older than a day ... add to archive list
+                    ##
+                    archivelist.append(p)
+
+            except Exception, e:
+                pass
 
     if len(archivelist) > 0:
         ##
